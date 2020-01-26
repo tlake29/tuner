@@ -10,6 +10,19 @@ cmake_minimum_required(VERSION 3.4.1)
 # and CMake builds them for you. When you build your app, Gradle
 # automatically packages shared libraries with your APK.
 
-add_library( oboe
+add_library( native-lib
              SHARED
-             src/main/cpp/oboeConfig.cpp )
+             src/main/cpp/native-lib.cpp )
+
+# Store the directory where oboe is
+set (OBOE_DIR /home/thomas/git/Tuner/oboe)
+
+# Add the library as a subdirectory
+add_subdirectory (${OBOE_DIR} ./oboe)
+
+# Specify the path to the oboe header files
+include_directories (${OBOE_DIR}/include)
+
+#Specify the libraries wich our native library is dependent on
+target_link_libraries(native-lib log oboe)
+
